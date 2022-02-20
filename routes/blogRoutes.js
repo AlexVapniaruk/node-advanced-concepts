@@ -14,10 +14,10 @@ module.exports = app => {
   });
 
   app.get('/api/blogs', requireLogin, async (req, res) => {
-    const blogs = await Blog.find({ _user: req.user.id });
-
-    res.send(blogs);
-  });
+      const blogs = await Blog.find({ _user: req.user.id }).cache({ key: req.user.id });
+    
+      res.send(blogs);
+    });
 
   app.post('/api/blogs', requireLogin, async (req, res) => {
     const { title, content } = req.body;
